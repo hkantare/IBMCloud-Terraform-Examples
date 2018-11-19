@@ -3,7 +3,7 @@ data "ibm_compute_ssh_key" "sshkey" {
   label = "ryan_terra"
 }
 resource "ibm_compute_vm_instance" "node" {
-  depends_on           = ["ibm_service_instance.cos"]
+  depends_on           = ["ibm_resource_instance.cos"]
   hostname             = "tfnode"
   domain               = "${var.domainname}"
   os_reference_code    = "${var.os}"

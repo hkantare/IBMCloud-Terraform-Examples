@@ -6,39 +6,27 @@ variable "coscreds" {
   }
 }
 
-data "ibm_org" "orgData" {
-  org = "${var.ibm_bmx_org}"
+resource "ibm_resource_instance" "cos" {
+  name     = "tfcostest"
+  service  = "cloud-object-storage"
+  plan     = "lite"
+  location = "global"
 }
 
-data "ibm_account" "accountData" {
-  org_guid = "${data.ibm_org.orgData.id}"
-}
-
-data "ibm_space" "spaceData" {
-  space = "${var.ibm_bmx_space}"
-  org   = "${var.ibm_bmx_org}"
-}
-
-resource "ibm_service_instance" "cos" {
-  name       = "tfcostest"
-  space_guid = "${data.ibm_space.spaceData.id}"
-  service    = "cloud-object-storage"
-  plan       = "Lite"
-}
-
-resource "ibm_service_key" "serviceKey" {
+resource "ibm_resource_key" "serviceKey" {
   name = "coskey"
 
   parameters = "${var.coscreds}"
 
-  service_instance_guid = "${ibm_service_instance.cos.id}"
+  resource_instance_id = "${ibm_resource_instance.cos.id}"
+
+  role = "Viewer"
 
   provisioner "local-exec" {
     command = "rm -f tfcostest.out"
   }
 
   provisioner "local-exec" {
-    command = "bx service key-show tfcostest coskey > tfcostest.out"
+    command = "bx resource service-key coskey > tfcostest.out"
   }
 }
-
