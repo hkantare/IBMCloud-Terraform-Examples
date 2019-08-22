@@ -51,6 +51,6 @@ resource "ibm_compute_vm_instance" "node" {
     local_disk = false
     private_vlan_id = "${var.priv_vlan}"
     public_vlan_id = "${var.pub_vlan}"
-    ssh_key_ids = ["${data.ibm_compute_ssh_key.sshkey.id}"]
+    ssh_key_ids = ["${data.ibm_compute_ssh_key.terra.id}"]
     public_security_group_ids = ["${ibm_security_group.sgterraform.id}"]
 }
