@@ -1,5 +1,5 @@
 data "ibm_compute_ssh_key" "tycho" {
-  label = "ryan_tycho"
+  label = "terra"
 }
 
 resource "ibm_storage_file" "fs_performance" {
