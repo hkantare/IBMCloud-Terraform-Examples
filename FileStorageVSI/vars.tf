@@ -15,7 +15,7 @@ variable domain_name {
 }
 
 variable datacenter {
-    default = "wdc07"
+    default = "dal13"
 }
 
 variable vm_flavor {
